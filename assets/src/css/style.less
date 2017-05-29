@@ -1,0 +1,97 @@
+@background_btn: #9ed432;
+@background_btn_hover: #86b300;
+@color_btn: #FFFFFF;
+
+@font_bold: "Roboto_Bold";
+@font_regular: "Roboto_Regular";
+
+
+@font-face {
+  font-family: Roboto_Regular;
+  src: url(../fonts/roboto_regular.otf);
+}
+@font-face {
+  font-family: Roboto_Regular;
+  src: url(../fonts/roboto_regular.ttf);
+}
+
+@font-face {
+  font-family: Roboto_Bold;
+  src: url(../fonts/roboto-bold.otf);
+}
+@font-face {
+  font-family: Roboto_Bold;
+  src: url(../fonts/roboto-bold.ttf);
+}
+
+body.main-page{
+  background-color: #090F27;
+  background-image: url("../img/main_fon.jpg");
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+    .blc-logo{
+      margin-top: 15%;
+    }
+
+    img.logo{
+      margin: 0 auto;
+      height: 55px;
+      display: block;
+    }
+
+    .blc-btn{
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    .btn-login{
+      font-family: @font_bold;
+      background-color: @background_btn;
+      color: @color_btn;
+      font-size: 16px;
+      padding: 20px 115px;
+    }
+    .btn-login:hover{
+      background-color: @background_btn_hover;
+      color: @color_btn;
+    }
+
+}
+
+header{
+
+  border: 1px solid #e6e6e6;
+
+    .logo{
+      height: 30px;
+      margin: 30px 50px;
+    }
+
+    .logout{
+      color: #363259;
+      float: right;
+      font-size: 14px;
+      line-height: 15px;
+      margin: 30px 50px ;
+
+      img{
+        margin-right: 5px;
+      }
+    }
+    .logout:hover{
+      color: #99cc33;
+      text-decoration: none;
+    }
+}
+
+body.list-page{
+
+    .main-content{
+      background-color: #f5f5f5;
+    }
+
+}
+
+

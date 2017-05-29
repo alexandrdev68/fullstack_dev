@@ -14,9 +14,9 @@ module.exports = {
         src: __dirname + "/src/index.js"
     },
     output: {
-        path: __dirname + '/build',
+        path: __dirname + '/api/templates',
         filename: "[name].js",
-        publicPath: "/static/",
+        publicPath: "/static",
         library: "[name]"
     },
 
@@ -37,12 +37,10 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             hash : true,
-            title : "ARM Accountant",
-            template : "index.ejs"
+            title : "Full Stack",
+            template : "index.ejs",
+            filename : 'index.phtml'
         })
-        /*new WEBPACK.optimize.CommonsChunkPlugin({
-         name : 'common'
-         })*/
     ],
 
     resolve: {

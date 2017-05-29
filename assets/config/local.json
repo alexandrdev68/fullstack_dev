@@ -1,0 +1,23 @@
+{
+  "port": 3001,
+  "ws_port": 3002,
+  "db": {
+    "host": "localhost",
+    "name": "accountant",
+    "user": "postgres",
+    "password": "secret",
+    "logging": false,
+    "type": "postgres"
+  },
+  "server": {
+    "request_max_timeout": 60,
+    "max_log_size": 500000,
+    "host": "localhost",
+    "client_ws_host" : "ws://localhost:3002",
+    "session_live": 360,
+    "protocol" : "http"
+  },
+  "electrum": {
+    "url": "https://sandbox.elpaysys.com"
+  }
+}
