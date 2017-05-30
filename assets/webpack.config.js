@@ -14,9 +14,9 @@ module.exports = {
         src: __dirname + "/src/index.js"
     },
     output: {
-        path: __dirname + '/api/templates',
+        path: __dirname + '/api/public/static',
         filename: "[name].js",
-        publicPath: "/static",
+        publicPath: "/static/",
         library: "[name]"
     },
 
@@ -39,7 +39,7 @@ module.exports = {
             hash : true,
             title : "Full Stack",
             template : "index.ejs",
-            filename : 'index.phtml'
+            filename : '../../templates/index.phtml'
         })
     ],
 
@@ -76,11 +76,11 @@ module.exports = {
             },
             {
                 test: /\.(jpg|png|svg)$/,
-                loader: 'file?name=public/images/[name].[ext]'
+                loader: 'file?name=img/[name].[ext]'
             },
             {
-                test: /\.(eot|ttf|woff|woff2)$/,
-                loader: 'file?name=public/fonts/[name].[ext]'
+                test: /\.(eot|ttf|woff|woff2|otf)$/,
+                loader: 'file?name=fonts/[name].[ext]'
             }
         ]
     }
