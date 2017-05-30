@@ -14,9 +14,9 @@ module.exports = {
         src: __dirname + "/src/index.js"
     },
     output: {
-        path: __dirname + '/api/templates',
+        path: __dirname + '/api/public',
         filename: "[name].js",
-        publicPath: "/static",
+        publicPath: "/public",
         library: "[name]"
     },
 
