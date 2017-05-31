@@ -4,32 +4,43 @@
 
 @font_bold: "Roboto_Bold";
 @font_regular: "Roboto_Regular";
-
+@font_light: "Roboto_light";
 
 @font-face {
-  font-family: Roboto_Regular;
+  font-family: @font_light;
+  src: url(../fonts/roboto-light.otf);
+}
+@font-face {
+  font-family: @font_light;
+  src: url(../fonts/roboto-light.ttf);
+}
+
+@font-face {
+  font-family: @font_regular;
   src: url(../fonts/roboto_regular.otf);
 }
 @font-face {
-  font-family: Roboto_Regular;
+  font-family: @font_regular;
   src: url(../fonts/roboto_regular.ttf);
 }
 
 @font-face {
-  font-family: Roboto_Bold;
+  font-family: @font_bold;
   src: url(../fonts/roboto-bold.otf);
 }
 @font-face {
-  font-family: Roboto_Bold;
+  font-family: @font_bold;
   src: url(../fonts/roboto-bold.ttf);
 }
 
-body.main-page{
+article.main-page{
   background-color: #090F27;
   background-image: url("../img/main_fon.jpg");
   background-position: top center;
   background-repeat: no-repeat;
   background-size: cover;
+
+  height: 100vh;
 
     .blc-logo{
       margin-top: 15%;
@@ -63,6 +74,7 @@ body.main-page{
 header{
 
   border: 1px solid #e6e6e6;
+  height: 95px;
 
     .logo{
       height: 30px;
@@ -74,7 +86,7 @@ header{
       float: right;
       font-size: 14px;
       line-height: 15px;
-      margin: 30px 50px ;
+      margin: 38px 50px ;
 
       img{
         margin-right: 5px;
@@ -86,11 +98,188 @@ header{
     }
 }
 
-body.list-page{
+article.list-page{
+
+
 
     .main-content{
       background-color: #f5f5f5;
     }
+
+    .right-block-task{
+
+      height: calc(~"100vh - 95px");
+      background-image:  url("../img/task_fon.jpg");
+      background-position: top center;
+      background-repeat: no-repeat;
+      background-size: cover;
+
+      .text{
+        color: #ffffff;
+        text-align: center;
+        padding-top: calc(~"50vh - 110px");
+
+        h3{
+          font-family: @font_light;
+          font-size: 48px;
+        }
+        p{
+          font-family: @font_light;
+          font-size: 20px;
+          img{
+            height: 20px;
+            margin-bottom: 7px;
+            margin-left: 5px;
+          }
+        }
+      }
+
+    }
+    .left-block-task{
+      height: calc(~"100vh - 95px");
+
+      .task-open > a, .task-closed > a{
+        text-decoration: none;
+        color: #000000;
+      }
+      .task-open > a:hover, .task-closed > a:hover{
+        color: #7f7f7f;
+      }
+
+      span.glyphicon{
+        font-size: 20px;
+        top: 4px;
+        padding-right: 5px;
+      }
+
+      .task-open{
+        text-align: right;
+        font-size: 16px;
+        padding-top: 20px;
+
+      }
+      .task-closed{
+        font-size: 16px;
+        padding-top: 20px;
+
+
+      }
+
+      .pagination{
+        margin: 20px auto 40px;
+        display: table;
+      }
+
+      .pagination > li > a, .pagination > li > span {
+        border: 0;
+        margin: 0 5px;
+        border-radius: 20px;
+        color: #333333;
+
+      }
+      .pagination > li > a.prev, .pagination > li > a.next{
+        background-color: transparent;
+        color: #99cc33;
+      }
+      .pagination > li > a.prev:hover, .pagination > li > a.next:hover{
+        text-decoration: underline;
+        background-color: transparent;
+        color: #99cc33;
+      }
+      .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+        background-color: #99cc33;
+        color: #FFFFFF;
+      }
+      .pagination > li > a:focus, .pagination > li > a:hover, .pagination > li > span:focus, .pagination > li > span:hover {
+        background-color: #99cc33;
+        color: #FFFFFF;
+      }
+
+      .tasks{
+        div{
+          background-color: #FFFFFF;
+          margin: 20px 30px;
+          border-radius: 8px;
+          padding: 20px 80px;
+          box-shadow:  0 2px 5px rgba(0, 0, 0, 0.1);
+
+          span.glyphicon-exclamation-sign {
+            position: absolute;
+            left: 85px;
+            top: 50px;
+            font-size: 20px;
+            line-height: 20px;
+            color: #99cc33;
+          }
+          span.comment{
+            background-image: url("../img/comment.png");
+            background-repeat: no-repeat;
+            padding-left: 15px;
+            background-position: 0px 3px;
+
+            position: absolute;
+            right: 70px;
+            top: 50px;
+            font-size: 15px;
+            line-height: 20px;
+            font-family: @font_regular;
+            a{
+              color: #999999;
+            }
+          }
+
+          h3{
+            font-family: @font_regular;
+            font-size: 15px;
+            line-height: 22px;
+            margin: 10px 0;
+            .title{
+              color: #000000;
+
+            }
+          }
+
+
+          .info{
+            font-family: @font_bold;
+            margin-left: 10px;
+            padding: 2px 5px;
+            border-radius: 3px;
+          }
+
+          .info.hide{
+            display: none;
+          }
+
+          .info.orange{
+            background-color: #f9c600;
+            color: #000000;
+            border-bottom: 1px solid #c6a300;
+          }
+          .info.red{
+            background-color: #e10b00;
+            color: #FFFFFF;
+            border-bottom: 1px solid #b40901;
+          }
+          .info.black{
+            background-color: #444444;
+            color: #FFFFFF;
+            border-bottom: 1px solid #000000;
+          }
+
+          p{
+            font-size: 13px;
+            color: #c0c0c0;
+            a{
+              color: #9ac055;
+            }
+          }
+
+        }
+      }
+
+    }
+
 
 }
 

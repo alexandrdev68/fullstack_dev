@@ -6,7 +6,7 @@ const config = require('config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-
+console.log('mode: ', NODE_ENV);
 module.exports = {
     context: __dirname + '/src',
 
@@ -27,7 +27,7 @@ module.exports = {
         new WEBPACK.NoErrorsPlugin(),
         new WEBPACK.DefinePlugin({
             NODE_ENV: JSON.stringify(NODE_ENV),
-            
+
 
         }),
         new WEBPACK.ProvidePlugin({
@@ -36,10 +36,10 @@ module.exports = {
             'window.jQuery': 'jquery'
         }),
         new HtmlWebpackPlugin({
-            hash : true,
-            title : "Full Stack",
-            template : "index.ejs",
-            filename : '../../templates/index.phtml'
+            hash: true,
+            title: "Full Stack",
+            template: "index.ejs",
+            filename: '../../templates/index.phtml'
         })
     ],
 
@@ -81,6 +81,14 @@ module.exports = {
             {
                 test: /\.(eot|ttf|woff|woff2|otf)$/,
                 loader: 'file?name=fonts/[name].[ext]'
+            },
+            {
+                test: /jquery-mousewheel/,
+                loader: "imports?define=>false&this=>window"
+            },
+            {
+                test: /malihu-custom-scrollbar-plugin/,
+                loader: "imports?define=>false&this=>window"
             }
         ]
     }

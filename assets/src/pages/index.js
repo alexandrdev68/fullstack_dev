@@ -16,16 +16,20 @@ class MainPage extends Component {
                         {'charset': 'UTF-8'}
                     ]}
                 />
-                <div className="row">
-                    <div
-                        className="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1   blc-logo">
-                        <img className="logo" src={logo} />
+                <article class="main-page">
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div
+                                className="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1   blc-logo">
+                                <img className="logo" src={logo}/>
+                            </div>
+                            <div
+                                className="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1   blc-btn">
+                                <button className="btn btn-login">Login With GitHub</button>
+                            </div>
+                        </div>
                     </div>
-                    <div
-                        className="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1   blc-btn">
-                        <button className="btn btn-login">Login With GitHub</button>
-                    </div>
-                </div>
+                </article>
             </div>
         );
     }

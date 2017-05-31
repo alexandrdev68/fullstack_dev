@@ -1,51 +1,61 @@
 @font-face {
-  font-family: Roboto_Regular;
+  font-family: "Roboto_light";
+  src: url(../fonts/roboto-light.otf);
+}
+@font-face {
+  font-family: "Roboto_light";
+  src: url(../fonts/roboto-light.ttf);
+}
+@font-face {
+  font-family: "Roboto_Regular";
   src: url(../fonts/roboto_regular.otf);
 }
 @font-face {
-  font-family: Roboto_Regular;
+  font-family: "Roboto_Regular";
   src: url(../fonts/roboto_regular.ttf);
 }
 @font-face {
-  font-family: Roboto_Bold;
+  font-family: "Roboto_Bold";
   src: url(../fonts/roboto-bold.otf);
 }
 @font-face {
-  font-family: Roboto_Bold;
+  font-family: "Roboto_Bold";
   src: url(../fonts/roboto-bold.ttf);
 }
-body.main-page {
+article.main-page {
   background-color: #090F27;
   background-image: url("../img/main_fon.jpg");
   background-position: top center;
   background-repeat: no-repeat;
   background-size: cover;
+  height: 100vh;
 }
-body.main-page .blc-logo {
+article.main-page .blc-logo {
   margin-top: 15%;
 }
-body.main-page img.logo {
+article.main-page img.logo {
   margin: 0 auto;
   height: 55px;
   display: block;
 }
-body.main-page .blc-btn {
+article.main-page .blc-btn {
   text-align: center;
   margin-top: 60px;
 }
-body.main-page .btn-login {
+article.main-page .btn-login {
   font-family: "Roboto_Bold";
   background-color: #9ed432;
   color: #FFFFFF;
   font-size: 16px;
   padding: 20px 115px;
 }
-body.main-page .btn-login:hover {
+article.main-page .btn-login:hover {
   background-color: #86b300;
   color: #FFFFFF;
 }
 header {
   border: 1px solid #e6e6e6;
+  height: 95px;
 }
 header .logo {
   height: 30px;
@@ -56,7 +66,7 @@ header .logout {
   float: right;
   font-size: 14px;
   line-height: 15px;
-  margin: 30px 50px ;
+  margin: 38px 50px ;
 }
 header .logout img {
   margin-right: 5px;
@@ -65,6 +75,165 @@ header .logout:hover {
   color: #99cc33;
   text-decoration: none;
 }
-body.list-page .main-content {
+article.list-page .main-content {
   background-color: #f5f5f5;
+}
+article.list-page .right-block-task {
+  height: calc(100vh - 95px);
+  background-image: url("../img/task_fon.jpg");
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+article.list-page .right-block-task .text {
+  color: #ffffff;
+  text-align: center;
+  padding-top: calc(50vh - 110px);
+}
+article.list-page .right-block-task .text h3 {
+  font-family: "Roboto_light";
+  font-size: 48px;
+}
+article.list-page .right-block-task .text p {
+  font-family: "Roboto_light";
+  font-size: 20px;
+}
+article.list-page .right-block-task .text p img {
+  height: 20px;
+  margin-bottom: 7px;
+  margin-left: 5px;
+}
+article.list-page .left-block-task {
+  height: calc(100vh - 95px);
+}
+article.list-page .left-block-task .task-open > a,
+article.list-page .left-block-task .task-closed > a {
+  text-decoration: none;
+  color: #000000;
+}
+article.list-page .left-block-task .task-open > a:hover,
+article.list-page .left-block-task .task-closed > a:hover {
+  color: #7f7f7f;
+}
+article.list-page .left-block-task span.glyphicon {
+  font-size: 20px;
+  top: 4px;
+  padding-right: 5px;
+}
+article.list-page .left-block-task .task-open {
+  text-align: right;
+  font-size: 16px;
+  padding-top: 20px;
+}
+article.list-page .left-block-task .task-closed {
+  font-size: 16px;
+  padding-top: 20px;
+}
+article.list-page .left-block-task .pagination {
+  margin: 20px auto 40px;
+  display: table;
+}
+article.list-page .left-block-task .pagination > li > a,
+article.list-page .left-block-task .pagination > li > span {
+  border: 0;
+  margin: 0 5px;
+  border-radius: 20px;
+  color: #333333;
+}
+article.list-page .left-block-task .pagination > li > a.prev,
+article.list-page .left-block-task .pagination > li > a.next {
+  background-color: transparent;
+  color: #99cc33;
+}
+article.list-page .left-block-task .pagination > li > a.prev:hover,
+article.list-page .left-block-task .pagination > li > a.next:hover {
+  text-decoration: underline;
+  background-color: transparent;
+  color: #99cc33;
+}
+article.list-page .left-block-task .pagination > .active > a,
+article.list-page .left-block-task .pagination > .active > a:focus,
+article.list-page .left-block-task .pagination > .active > a:hover,
+article.list-page .left-block-task .pagination > .active > span,
+article.list-page .left-block-task .pagination > .active > span:focus,
+article.list-page .left-block-task .pagination > .active > span:hover {
+  background-color: #99cc33;
+  color: #FFFFFF;
+}
+article.list-page .left-block-task .pagination > li > a:focus,
+article.list-page .left-block-task .pagination > li > a:hover,
+article.list-page .left-block-task .pagination > li > span:focus,
+article.list-page .left-block-task .pagination > li > span:hover {
+  background-color: #99cc33;
+  color: #FFFFFF;
+}
+article.list-page .left-block-task .tasks div {
+  background-color: #FFFFFF;
+  margin: 20px 30px;
+  border-radius: 8px;
+  padding: 20px 80px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+article.list-page .left-block-task .tasks div span.glyphicon-exclamation-sign {
+  position: absolute;
+  left: 85px;
+  top: 50px;
+  font-size: 20px;
+  line-height: 20px;
+  color: #99cc33;
+}
+article.list-page .left-block-task .tasks div span.comment {
+  background-image: url("../img/comment.png");
+  background-repeat: no-repeat;
+  padding-left: 15px;
+  background-position: 0px 3px;
+  position: absolute;
+  right: 70px;
+  top: 50px;
+  font-size: 15px;
+  line-height: 20px;
+  font-family: "Roboto_Regular";
+}
+article.list-page .left-block-task .tasks div span.comment a {
+  color: #999999;
+}
+article.list-page .left-block-task .tasks div h3 {
+  font-family: "Roboto_Regular";
+  font-size: 15px;
+  line-height: 22px;
+  margin: 10px 0;
+}
+article.list-page .left-block-task .tasks div h3 .title {
+  color: #000000;
+}
+article.list-page .left-block-task .tasks div .info {
+  font-family: "Roboto_Bold";
+  margin-left: 10px;
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+article.list-page .left-block-task .tasks div .info.hide {
+  display: none;
+}
+article.list-page .left-block-task .tasks div .info.orange {
+  background-color: #f9c600;
+  color: #000000;
+  border-bottom: 1px solid #c6a300;
+}
+article.list-page .left-block-task .tasks div .info.red {
+  background-color: #e10b00;
+  color: #FFFFFF;
+  border-bottom: 1px solid #b40901;
+}
+article.list-page .left-block-task .tasks div .info.black {
+  background-color: #444444;
+  color: #FFFFFF;
+  border-bottom: 1px solid #000000;
+}
+article.list-page .left-block-task .tasks div p {
+  font-size: 13px;
+  color: #c0c0c0;
+}
+article.list-page .left-block-task .tasks div p a {
+  color: #9ac055;
 }

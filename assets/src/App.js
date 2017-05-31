@@ -5,18 +5,23 @@ import {
     Switch
 } from 'react-router-dom';
 import MainPage from './pages';
+import ListPage from './pages/list';
+import cookie from 'js-cookie';
 import NotFound from './pages/NotFound';
+import 'jquery';
 
 class App extends Component {
+
+
     render() {
+
+        let logged = 1;//cookie.get('logged');
         return (
             <Router>
-                <div className="container-fluid">
-                    <Switch>
-                        <Route path="/" exact component={MainPage}/>
-                        <Route component={NotFound}/>
-                    </Switch>
-                </div>
+                <Switch>
+                    <Route path="/" exact component={!!logged ? ListPage : MainPage}/>
+                    <Route component={NotFound}/>
+                </Switch>
             </Router>
         );
     }
