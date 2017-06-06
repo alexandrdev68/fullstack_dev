@@ -20,7 +20,6 @@ class App extends Component {
             <Router>
                 <Switch>
                     <Route path="/" exact component={!!logged ? ListPage : MainPage}/>
-                    <Route path="/confirm" component={ConfirmPage} />
                     <Route component={NotFound}/>
                 </Switch>
             </Router>

@@ -15,5 +15,9 @@ return [
             'path' => __DIR__ . '/../logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
         ],
+        'OAuth' => [
+            'client_id' => 'd5f9537ea6ab44ac6ecd',
+            'client_secret' => '951a6da137d76b48a439dc28659715be479e0a21'
+        ]
     ],
 ];
