@@ -44,9 +44,9 @@ $app->any('/proxy[/{params:.*}]', function($request, $response, $args){
         $response_body = json_decode(Request::$response, true);
 
 //print_r(Request::$custom_headers);
-       echo Request::$response;
+       //print_r(Request::$info);
 
-        return $response->write(Request::$response);
+        return $response->withJson(Request::$response, Request::$info['http_code']);
     }else{
         return $response->withRedirect('/logout');
     }

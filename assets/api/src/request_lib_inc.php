@@ -12,18 +12,20 @@ class Request {
 	static public $cRes;
 	static public $error = array();
 	static public $custom_headers = array();
+	static public $info = '';
 	
 	
 	
 	static public function send($arFields = array()){
 		self::$request_fields = count($arFields) == 0 ? '' : json_encode($arFields);
 		
-		//echo self::$request_fields.'    '.self::$login.' : '.self::$password.'     '.self::$url.self::$operation; exit;
+		//echo self::$type.'   '.self::$request_fields.'    '.self::$login.' : '.self::$password.'     '.self::$url.self::$operation; exit;
 		
 		
 		self::init();
 		
 		self::$response = curl_exec(self::$cRes);
+		self::$info = curl_getinfo(self::$cRes);
 	}
 	
 	static public function init(){
