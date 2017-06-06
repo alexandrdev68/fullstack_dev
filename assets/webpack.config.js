@@ -6,6 +6,7 @@ const config = require('config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const Client_ID = config.get('Client_ID');
+const Redirect_uri = config.get('Callback_URL');
 
 console.log('mode: ', NODE_ENV);
 module.exports = {
@@ -29,7 +30,8 @@ module.exports = {
         new WEBPACK.DefinePlugin({
             NODE_ENV: JSON.stringify(NODE_ENV),
             'process.env': {
-                ClientID: JSON.stringify(Client_ID)
+                ClientID: JSON.stringify(Client_ID),
+                Redirect_uri : JSON.stringify(Redirect_uri)
             }
 
         }),

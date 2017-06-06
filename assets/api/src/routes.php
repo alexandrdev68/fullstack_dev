@@ -1,11 +1,12 @@
 <?php
 // Routes
+include_once 'request_lib_inc.php';
 
 $app->any('/confirm[/{params:.*}]', function($request, $response, $args){
     //var_dump($args);
     //var_dump($request);
     //var_dump($_GET);
-    $client = new \GuzzleHttp\Client([
+    /*$client = new \GuzzleHttp\Client([
         'base_uri' => 'https://github.com', 
         'headers'=>[
             'Accept' => 'application/json'
@@ -32,7 +33,25 @@ $app->any('/confirm[/{params:.*}]', function($request, $response, $args){
         $body = $res->getBody();
     }catch(Exception $e){
         echo $e->getMessage();
+    }*/
+
+
+    Request::$url = 'https://github.com';
+    Request::$operation = '/login/oauth/access_token';
+    Request::$type = 'POST';
+    Request::send([
+        'client_id' => $this->get('settings')['OAuth']['client_id'],
+        'client_secret' => $this->get('settings')['OAuth']['client_secret'],
+        'code' => $_GET['code']
+    ]);
+
+    $response_body = json_decode(Request::$response, true);
+    if(isset($response_body['access_token'])){
+
+        $_SESSION['access_token'] = $response_body['access_token'];
+
     }
+    
     
 });
 $app->any('/proxy[/{params:.*}]', function($request, $response, $args){
