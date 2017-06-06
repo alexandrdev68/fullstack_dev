@@ -13,6 +13,22 @@ require('malihu-custom-scrollbar-plugin')($);
 
 class ListPage extends Component {
 
+    constructor(props){
+
+        super(props);
+
+        this.logoutHandler = this.logoutHandler.bind(this);
+    }
+
+
+    logoutHandler(event){
+
+        //event.preventDefault();
+
+
+
+    }
+
     render() {
 
         $(document).ready(function () {
@@ -33,7 +49,8 @@ class ListPage extends Component {
                 <header className="container-fluid">
                     <div className="row">
                         <div className="col-md-6 col-sm-6 col-xs-6"><img className="logo" src={logo}/></div>
-                        <div className="col-md-6 col-sm-6 col-xs-6"><a href="#" className="logout"><img src={logout}/>
+                        <div className="col-md-6 col-sm-6 col-xs-6">
+                            <a onClick={this.logoutHandler} href="/logout" className="logout"><img src={logout}/>
                             Logout</a></div>
                     </div>
                 </header>

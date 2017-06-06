@@ -49,11 +49,15 @@ $app->any('/confirm[/{params:.*}]', function($request, $response, $args){
     if(isset($response_body['access_token'])){
 
         $_SESSION['access_token'] = $response_body['access_token'];
+        setcookie('logged', 1, time() + (86400 * 30));
 
     }
     
+   return $response->withRedirect('/');
     
 });
+
+
 $app->any('/proxy[/{params:.*}]', function($request, $response, $args){
     var_dump($args);
     //var_dump($request);
@@ -62,6 +66,13 @@ $app->any('/proxy[/{params:.*}]', function($request, $response, $args){
 $app->get('/[{name}]', function ($request, $response, $args) {
     // Sample log message
     $this->logger->info("Slim-Skeleton '/' route");
+
+    if(isset($args['name']) && $args['name'] == 'logout'){
+        unset($_SESSION['access_token']);
+        setcookie('logged', 1, time() - 1);
+
+        return $response->withRedirect('/');
+    }
 
     // Render index view
     return $this->renderer->render($response, 'index.phtml', $args);
