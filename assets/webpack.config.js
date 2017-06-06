@@ -5,13 +5,14 @@ const WEBPACK = require('webpack');
 const config = require('config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const Client_ID = config.get('Client_ID');
 
 console.log('mode: ', NODE_ENV);
 module.exports = {
     context: __dirname + '/src',
 
     entry: {
-        src: __dirname + "/src/index.js"
+        src: __dirname + "/src/index.jsx"
     },
     output: {
         path: __dirname + '/api/public/static',
@@ -27,7 +28,9 @@ module.exports = {
         new WEBPACK.NoErrorsPlugin(),
         new WEBPACK.DefinePlugin({
             NODE_ENV: JSON.stringify(NODE_ENV),
-
+            'process.env': {
+                ClientID: JSON.stringify(Client_ID)
+            }
 
         }),
         new WEBPACK.ProvidePlugin({
@@ -57,7 +60,7 @@ module.exports = {
     module: {
         loaders: [
             {
-                test: /\.js$/,
+                test: /\.(js|jsx)$/,
                 loader: ['babel-loader'],
                 query: {
                     presets: [

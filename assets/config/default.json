@@ -1,3 +1,7 @@
 {
-  "port": 8080
+  "port": 8080,
+  "Client_ID" : "d5f9537ea6ab44ac6ecd",
+  "Client_Secret" : "951a6da137d76b48a439dc28659715be479e0a21",
+  "Application_name" : "fullstack_dev",
+  "Callback_URL" : "http://77.222.158.239:8085/confirm"
 }
