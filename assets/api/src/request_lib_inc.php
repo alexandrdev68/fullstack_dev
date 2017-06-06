@@ -1,8 +1,7 @@
 <?php
 class Request {
 	
-	//static public $url = 'https://api.globalmoney.ua';//for production
-	static public $url = 'http://192.168.2.107:9000';//for development
+	static public $url = '';
 	static public $operation = '';
 	static public $type = 'POST';
 	static public $need_auth = false;
@@ -15,24 +14,6 @@ class Request {
 	static public $custom_headers = array();
 	
 	
-	
-	
-	static public function write_log($arLogFields){
-		
-		$filename = $_SERVER['DOCUMENT_ROOT'].'/data/oper_'.date('Y-W').'.log';
-		$date = date('Y-m-d H:i:s', time());
-		//$res = json_decode(self::$response, true);
-		$logString = $date.' params: '.json_encode($arLogFields);
-		/*if($res['status'] == 0){
-			$logString .= ' oper_status: good';
-		}else{
-			$res['message'] = self::get_error_text($res['status']);
-			$logString .= ' oper_status: bad '.$res['message'];
-		}*/
-		$logString .= chr(10).chr(13);
-		file_put_contents($filename, $logString, FILE_APPEND);
-		
-	}
 	
 	static public function send($arFields = array()){
 		self::$request_fields = count($arFields) == 0 ? '' : json_encode($arFields);
@@ -90,9 +71,6 @@ class Request {
 	     }
 	}
 	
-	static public function get_error_text($code){
-		return isset(self::$error['code_'.$code]) ? self::$error['code_'.$code] : 'unknown error #'.$code;
-	}
 	
 	static public function comment_filter($data){
      	$filter = array( '<', '>', '&', '#', '=', '"');

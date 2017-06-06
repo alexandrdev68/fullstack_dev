@@ -4,30 +4,38 @@
 import React, {Component} from 'react';
 import Helmet from 'react-helmet';
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
-import logo from '../img/testio2.png';
-import logout from '../img/ico-logout.png';
 import right_logo from '../img/testio.png';
 import '../css/jquery.mCustomScrollbar.css';
+import browser_request from 'browser-request';
 require("jquery-mousewheel")($);
 require('malihu-custom-scrollbar-plugin')($);
+import ListHeader from '../components/ListHeader';
 
 class ListPage extends Component {
 
-    constructor(props){
+    constructor(props) {
 
         super(props);
 
-        this.logoutHandler = this.logoutHandler.bind(this);
     }
 
 
-    logoutHandler(event){
+    issuesResponse(response){
 
-        //event.preventDefault();
-
-
+        console.log(response);
 
     }
+
+
+    componentDidMount() {
+
+        browser_request({
+            method: 'GET',
+            url: '/proxy/issues'
+        }, this.issuesResponse.bind(this));
+
+    }
+
 
     render() {
 
@@ -46,14 +54,8 @@ class ListPage extends Component {
                         {'charset': 'UTF-8'}
                     ]}
                 />
-                <header className="container-fluid">
-                    <div className="row">
-                        <div className="col-md-6 col-sm-6 col-xs-6"><img className="logo" src={logo}/></div>
-                        <div className="col-md-6 col-sm-6 col-xs-6">
-                            <a onClick={this.logoutHandler} href="/logout" className="logout"><img src={logout}/>
-                            Logout</a></div>
-                    </div>
-                </header>
+
+                <ListHeader/>
 
                 <article className="list-page">
 

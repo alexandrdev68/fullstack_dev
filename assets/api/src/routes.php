@@ -3,39 +3,7 @@
 include_once 'request_lib_inc.php';
 
 $app->any('/confirm[/{params:.*}]', function($request, $response, $args){
-    //var_dump($args);
-    //var_dump($request);
-    //var_dump($_GET);
-    /*$client = new \GuzzleHttp\Client([
-        'base_uri' => 'https://github.com', 
-        'headers'=>[
-            'Accept' => 'application/json'
-            ]
-        ]);
-
-    $arRequest = [
-            'client_id' => $this->get('settings')['OAuth']['client_id'],
-            'client_secret' => $this->get('settings')['OAuth']['client_secret'],
-            'code' => $_GET['code']
-    ];
-
-    try{
-        $res = $client->request('POST', '/login/oauth/access_token', $arRequest);
-    }catch(Exception $error){
-        echo $error->getMessage();
-        exit;
-    }
-
-    try{
-        $status = $res->getStatusCode();
-        $content_type = $res->getHeaderLine('content-type');
-        // 'application/json; charset=utf8'
-        $body = $res->getBody();
-    }catch(Exception $e){
-        echo $e->getMessage();
-    }*/
-
-
+    
     Request::$url = 'https://github.com';
     Request::$operation = '/login/oauth/access_token';
     Request::$type = 'POST';
@@ -58,10 +26,35 @@ $app->any('/confirm[/{params:.*}]', function($request, $response, $args){
 });
 
 
+
+
+
 $app->any('/proxy[/{params:.*}]', function($request, $response, $args){
-    var_dump($args);
-    //var_dump($request);
-    var_dump($_GET);
+    
+    if(isset($_SESSION['access_token'])){
+        Request::$url = 'https://api.github.com';
+        Request::$operation = '/'.$args['params'];
+        Request::$custom_headers = [
+            'Authorization: token '.$_SESSION['access_token'],
+            'Accept: application/vnd.github.v3+json'
+        ];
+        Request::$type = $request->getMethod();
+        Request::send($request->getParsedBody());
+
+        $response_body = json_decode(Request::$response, true);
+
+//print_r(Request::$custom_headers);
+       echo Request::$response;
+
+        return $response->write(Request::$response);
+    }else{
+        return $response->withRedirect('/logout');
+    }
+
+    
+    
+
+
 });
 $app->get('/[{name}]', function ($request, $response, $args) {
     // Sample log message
