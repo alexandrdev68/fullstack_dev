@@ -36,16 +36,20 @@ $app->any('/proxy[/{params:.*}]', function($request, $response, $args){
         Request::$operation = '/'.$args['params'];
         Request::$custom_headers = [
             'Authorization: token '.$_SESSION['access_token'],
-            'Accept: application/vnd.github.v3+json'
+            'Accept: application/vnd.github.v3+json',
+            'User-Agent: fullstack_dev'
         ];
         Request::$type = $request->getMethod();
         Request::send($request->getParsedBody());
 
-        $response_body = json_decode(Request::$response, true);
-
-//print_r(Request::$custom_headers);
-       //print_r(Request::$info);
-
+        if(Request::$response === false){
+            Request::$response = array(
+                'curl_error'=>Request::$error_string,
+                'headers'=>Request::$info
+            );
+        }else{
+            Request::$response = json_decode(Request::$response, true);
+        }
         return $response->withJson(Request::$response, Request::$info['http_code']);
     }else{
         return $response->withRedirect('/logout');

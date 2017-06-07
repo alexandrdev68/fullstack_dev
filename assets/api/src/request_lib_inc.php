@@ -13,6 +13,7 @@ class Request {
 	static public $error = array();
 	static public $custom_headers = array();
 	static public $info = '';
+	static public $error_string;
 	
 	
 	
@@ -26,6 +27,7 @@ class Request {
 		
 		self::$response = curl_exec(self::$cRes);
 		self::$info = curl_getinfo(self::$cRes);
+		self::$error_string = curl_error(self::$cRes);
 	}
 	
 	static public function init(){

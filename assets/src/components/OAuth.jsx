@@ -13,7 +13,10 @@ class OAuth extends Component{
 
     sendOAuth(){
 
-        window.location.href = `http://github.com/login/oauth/authorize?client_id=${process.env.ClientID}&redirect_uri=${process.env.Redirect_uri}`
+        window.location.href = 'http://github.com/login/oauth/authorize' + 
+            `?client_id=${process.env.ClientID}`+
+            `&redirect_uri=${process.env.Redirect_uri}` + 
+            `&scope=user%20public_repo`
 
     }
 
