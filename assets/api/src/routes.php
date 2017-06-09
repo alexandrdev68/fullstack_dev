@@ -56,7 +56,7 @@ $app->any('/header[/{params:.*}]', function($request, $response, $args){
             $res = [];
             foreach(Request::$response as $index=>$header){
                 Request::$response[$index] = explode(':', $header, 2);
-                $res[Request::$response[$index][0]] = Request::$response[$index][1];
+                $res[Request::$response[$index][0]] = (isset(Request::$response[$index][1]) ? Request::$response[$index][1] : '');
             }
             Request::$response = $res;
         }

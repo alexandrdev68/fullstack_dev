@@ -40,8 +40,8 @@ class Paging extends Component {
         navArr = this.build_page(this.props.currPage, this.props.pagesCount, this.props.navChainLength);
 
         navHTML.push(
-            <li>
-                <Link key="prev"
+            <li key="prev">
+                <Link
                       data-page_num={navArr['current'] - 1}
                       to={`/${navArr['current'] - 1}`}
                       style={navArr[0] == 'pred' ? {visibility: 'visible'} : {visibility: 'hidden'}}>Previous
@@ -52,11 +52,11 @@ class Paging extends Component {
         for (let index = 0; index < navArr.length; index++) {
             if (declineStr.indexOf(navArr[index]) == -1) {
                 if (navArr[index] == 'curr') {
-                    navHTML.push(<li><a key={index} href="#" className="active">{navArr['current']}</a></li>);
+                    navHTML.push(<li key={index} className="active"><Link to="#" >{navArr['current']}</Link></li>);
                 } else if (navArr[index] !== undefined) {
                     navHTML.push(
-                        <li>
-                            <Link key={index}
+                        <li key={index}>
+                            <Link
                                   data-page_num={navArr[index]}
                                   to={`/${navArr[index]}`}>
                                 {navArr[index]}
@@ -65,12 +65,12 @@ class Paging extends Component {
                 }
 
             } else if (navArr[index] == 'first' || navArr[index] == 'last') {
-                navHTML.push(<span key={navArr[index]}>...</span>);
+                navHTML.push(<li key={navArr[index]}><span >...</span></li>);
             }
         }
         navHTML.push(
-            <li>
-                <Link key='next'
+            <li key='next'>
+                <Link
                       data-page_num={navArr['current'] + 1}
                       to={`/${navArr['current'] + 1}`}
                       style={navArr['current'] >= this.props.pagesCount ?

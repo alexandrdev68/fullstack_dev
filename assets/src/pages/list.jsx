@@ -29,7 +29,7 @@ class ListPage extends Component {
                     ]}
                 />
                 <ListHeader />
-                <ListIssues />
+                <ListIssues {...this.props}/>
             </div>
 
         );

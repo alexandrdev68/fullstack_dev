@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {
     BrowserRouter as Router,
     Route,
-    Switch
+    Switch,
+    Match
 } from 'react-router-dom';
 import MainPage from './pages/index';
 import ListPage from './pages/list';
@@ -19,6 +20,7 @@ class App extends Component {
         return (
             <Router>
                 <Switch>
+                    <Route path="/:issue_page" component={!!logged ? ListPage : MainPage}/>
                     <Route path="/" exact component={!!logged ? ListPage : MainPage}/>
                     <Route component={NotFound}/>
                 </Switch>

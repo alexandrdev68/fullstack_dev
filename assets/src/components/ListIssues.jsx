@@ -14,6 +14,8 @@ class ListIssues extends Component {
         super(props);
 
         this.buildIssuesHTML = this.buildIssuesHTML.bind(this);
+        this.onPageChange = this.onPageChange.bind(this);
+        this.getIssues = this.getIssues.bind(this);
 
         this.state = {
             issues: [],
@@ -44,7 +46,30 @@ class ListIssues extends Component {
     }
 
 
+    componentWillMount(){
+
+        if(!!this.props.match && !!this.props.match.params.issue_page){
+            this.setState({
+                currentPage : this.props.match.params.issue_page
+            });
+        }
+
+    }
+
+
+    getIssues(){
+
+        browser_request({
+            method: 'GET',
+            url: `/proxy/user/issues?filter=all&state=all&page=${this.state.currentPage}&per_page=${this.state.perPage}`
+        }, this.issuesResponse.bind(this));
+
+    }
+
+
     componentDidMount() {
+
+        let self = this;
 
         browser_request({
             method: 'GET',
@@ -65,12 +90,20 @@ class ListIssues extends Component {
                         }
                     }
                 }
-                browser_request({
-                    method: 'GET',
-                    url: `/proxy/user/issues?filter=all&state=all&page=${this.state.currentPage}&per_page=${this.state.perPage}`
-                }, this.issuesResponse.bind(this));
+                self.getIssues();
             }
         });
+
+
+    }
+
+    onPageChange({target}){
+
+        let page_num = target.getElementsByTagName('a')[0].dataset.page_num;
+        this.setState({
+            currentPage : page_num
+        });
+
 
 
     }
