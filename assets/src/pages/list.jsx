@@ -31,7 +31,7 @@ class ListPage extends Component {
 
         browser_request({
             method: 'GET',
-            url: '/proxy/user/issues'
+            url: '/proxy/user/issues?filter=all&state=all'
         }, this.issuesResponse.bind(this));
 
     }

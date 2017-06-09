@@ -17,6 +17,7 @@ $app->any('/confirm[/{params:.*}]', function($request, $response, $args){
     if(isset($response_body['access_token'])){
 
         $_SESSION['access_token'] = $response_body['access_token'];
+        $this->logger->info("aouth token was saved in session: {$response_body['access_token']}");
         setcookie('logged', 1, time() + (86400 * 30));
 
     }
@@ -32,8 +33,11 @@ $app->any('/confirm[/{params:.*}]', function($request, $response, $args){
 $app->any('/proxy[/{params:.*}]', function($request, $response, $args){
     
     if(isset($_SESSION['access_token'])){
+        $query = explode('?', $request->getUri())[1];
+        $arg = (isset($query) ? $query : '');
+        $this->logger->info("params: {$arg}");
         Request::$url = 'https://api.github.com';
-        Request::$operation = '/'.$args['params'];
+        Request::$operation = '/'.$args['params'].'?'.$query;
         Request::$custom_headers = [
             'Authorization: token '.$_SESSION['access_token'],
             'Accept: application/vnd.github.v3+json',
