@@ -40,11 +40,11 @@ class Paging extends Component {
         navArr = this.build_page(this.props.currPage, this.props.pagesCount, this.props.navChainLength);
 
         navHTML.push(
-            <li key="prev">
+            <li key="prev" style={navArr[0] == 'pred' ? {visibility: 'visible'} : {visibility: 'hidden'}}>
                 <Link
                       data-page_num={navArr['current'] - 1}
                       to={`/${navArr['current'] - 1}`}
-                      style={navArr[0] == 'pred' ? {visibility: 'visible'} : {visibility: 'hidden'}}>Previous
+                      >Previous
                 </Link>
             </li>
         );
@@ -52,10 +52,10 @@ class Paging extends Component {
         for (let index = 0; index < navArr.length; index++) {
             if (declineStr.indexOf(navArr[index]) == -1) {
                 if (navArr[index] == 'curr') {
-                    navHTML.push(<li key={index} className="active"><Link to="#" >{navArr['current']}</Link></li>);
+                    navHTML.push(<li key={index} className="active"><Link to="/#" >{navArr['current']}</Link></li>);
                 } else if (navArr[index] !== undefined) {
                     navHTML.push(
-                        <li key={index}>
+                        <li key={index} className="">
                             <Link
                                   data-page_num={navArr[index]}
                                   to={`/${navArr[index]}`}>
@@ -69,12 +69,12 @@ class Paging extends Component {
             }
         }
         navHTML.push(
-            <li key='next'>
+            <li key='next' style={navArr['current'] >= this.props.pagesCount ?
+                {visibility: 'hidden'} : {visibility: 'visible'}}>
                 <Link
                       data-page_num={navArr['current'] + 1}
                       to={`/${navArr['current'] + 1}`}
-                      style={navArr['current'] >= this.props.pagesCount ?
-                          {visibility: 'hidden'} : {visibility: 'visible'}}>
+                      >
                     Next
                 </Link>
             </li>

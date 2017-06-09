@@ -16,15 +16,18 @@ class ListIssues extends Component {
         this.buildIssuesHTML = this.buildIssuesHTML.bind(this);
         this.onPageChange = this.onPageChange.bind(this);
         this.getIssues = this.getIssues.bind(this);
+        this.getLastPageFromLink = this.getLastPageFromLink.bind(this);
 
         this.state = {
             issues: [],
-            currentPage : 1,
-            pagesCount : 1,
-            perPage : 3
+            currentPage: 1,
+            pagesCount: 1,
+            perPage: 3,
+            issuesClosed: 0,
+            issuesOpened: 0
         };
 
-        this.moment  = moment;
+        this.moment = moment;
 
         this.jsExt = new JSExt();
 
@@ -35,10 +38,10 @@ class ListIssues extends Component {
 
         if (error) {
             throw error;
-        }else{
+        } else {
 
             this.setState({
-                issues:JSON.parse(body)
+                issues: JSON.parse(body)
             });
 
         }
@@ -46,18 +49,86 @@ class ListIssues extends Component {
     }
 
 
-    componentWillMount(){
+    getLastPageFromLink(link) {
 
-        if(!!this.props.match && !!this.props.match.params.issue_page){
-            this.setState({
-                currentPage : this.props.match.params.issue_page
-            });
+        let temp = link.split('rel="next", ')[1];
+        temp = temp.match(/&page=[\d]{1,}/g);
+        if (/^&page/.test(temp)) {
+            return temp[0].split('=')[1];
         }
+        return false;
+    }
+
+
+    componentWillMount() {
+
+        let self = this;
+
+        browser_request({
+            method: 'GET',
+            url: `/header/user/issues?filter=all&state=all&page=${this.state.currentPage}&per_page=${this.state.perPage}`
+        }, (error, response, body) => {
+            if (error) {
+                throw error;
+            } else {
+                body = JSON.parse(body);
+                if (!!body.Link) {
+                    let last_page = self.getLastPageFromLink(body.Link);
+                    if (last_page !== false) {
+                        self.setState({
+                            pagesCount: last_page
+                        });
+                    }
+                }
+                if (!!self.props.match && !!self.props.match.params.issue_page) {
+                    self.setState({
+                        currentPage: self.props.match.params.issue_page
+                    });
+                }
+                self.getIssues();
+            }
+        });
+
+        browser_request({
+            method: 'GET',
+            url: `/header/user/issues?filter=all&state=close&per_page=1`
+        }, (error, response, body) => {
+            if (error) {
+                throw error;
+            } else {
+                body = JSON.parse(body);
+                if (!!body.Link) {
+                    this.setState({
+                        issuesClosed: self.getLastPageFromLink(body.Link)
+                    });
+                }
+
+            }
+
+        });
+
+        browser_request({
+            method: 'GET',
+            url: `/header/user/issues?filter=all&state=open&per_page=1`
+        }, (error, response, body) => {
+            if (error) {
+                throw error;
+            } else {
+                body = JSON.parse(body);
+                if (!!body.Link) {
+                    this.setState({
+                        issuesOpened: self.getLastPageFromLink(body.Link)
+                    });
+                }
+
+            }
+
+        });
 
     }
 
 
-    getIssues(){
+    getIssues() {
 
         browser_request({
             method: 'GET',
@@ -69,42 +140,18 @@ class ListIssues extends Component {
 
     componentDidMount() {
 
-        let self = this;
-
-        browser_request({
-            method: 'GET',
-            url: `/header/user/issues?filter=all&state=all&page=${this.state.currentPage}&per_page=${this.state.perPage}`
-        }, (error, response, body)=>{
-            if (error) {
-                throw error;
-            }else{
-                body = JSON.parse(body);
-                if(!!body.Link){
-                    let temp = body.Link.split('rel="next", ')[1];
-                    temp = temp.split('&');
-                    for(let index = 0; index < temp.length; index++){
-                        if(/^page/.test(temp[index])){
-                            this.setState({
-                                pagesCount : temp[index].split('=')[1]
-                            });
-                        }
-                    }
-                }
-                self.getIssues();
-            }
-        });
-
 
     }
 
-    onPageChange({target}){
-
-        let page_num = target.getElementsByTagName('a')[0].dataset.page_num;
+    onPageChange(event) {
+        let target = event.target;
+        let page_num = target.dataset.page_num;
         this.setState({
-            currentPage : page_num
+            currentPage: page_num
+        }, () => {
+            this.getIssues();
+            event.click();
         });
-
-
 
     }
 
@@ -116,8 +163,8 @@ class ListIssues extends Component {
             let in_style = {};
             for (let index = 0; index < labels.length; index++) {
                 in_style = {
-                    backgroundColor : `#${labels[index].color}`
-                }
+                    backgroundColor: `#${labels[index].color}`
+                };
                 ar_html.push(
                     <span key={index} className="info" style={in_style}>{labels[index].name}</span>
                 );
@@ -125,35 +172,35 @@ class ListIssues extends Component {
             return ar_html;
         };
 
-        let getInfoAboutIssue = (issue)=>{
+        let getInfoAboutIssue = (issue) => {
 
             this.moment().format();
 
             let now = this.moment();
-            let created = this.moment(issue.created_at);
-            let diff = now.diff(created, 'days');
             let state_text = '';
-            if(issue.state == 'open'){
+            let created = '';
+            if (issue.state == 'open') {
                 state_text = 'opened';
-            }else if(issue.state == 'closed'){
+                 created = this.moment(issue.created_at);
+            } else if (issue.state == 'closed') {
                 state_text = 'closed';
+                created = this.moment(issue.closed_at);
             }
 
-
-
+            let diff = now.diff(created, 'days');
             let dec = new this.jsExt.Declense({
-                       declensions : {
-                             0:'days',
-                             1:'day',
-                             2:'days',
-                             3:'days',
-                             4:'days'
-                           }
-                    });
+                declensions: {
+                    0: 'days',
+                    1: 'day',
+                    2: 'days',
+                    3: 'days',
+                    4: 'days'
+                }
+            });
 
             return (
                 <p>#{issue.number} {state_text} {diff == 0 ? 'today by' : `${diff} ${dec.getWord(diff)} ago by`}
-                <a href={issue.user.html_url}> {issue.user.login}</a></p>
+                    <a href={issue.user.html_url}> {issue.user.login}</a></p>
             );
         };
 
@@ -165,7 +212,10 @@ class ListIssues extends Component {
                 (
                     <div key={index} className="col-md-12 col-sm-12 col-xs-12 tasks">
                         <div>
-                            <span className="glyphicon glyphicon-exclamation-sign"></span>
+                            {issues[index].state == 'open' ?
+                                <span className="glyphicon glyphicon-exclamation-sign"></span> :
+                                <span className="glyphicon glyphicon-ok-circle"></span>}
+
                             <span className="glyphicon comment">&#8194;
                                 <a href={issues[index].html_url}>{issues[index].comments}</a>
                             </span>
@@ -207,12 +257,14 @@ class ListIssues extends Component {
                             <div className="row">
                                 <div className="col-md-6 col-sm-6 col-xs-6 task-open">
                                     <a href="#">
-                                        <span className="glyphicon glyphicon-exclamation-sign"></span> 4220 Open
+                                        <span className="glyphicon glyphicon-exclamation-sign"></span>
+                                        {this.state.issuesOpened} Open
                                     </a>
                                 </div>
                                 <div className="col-md-6 col-sm-6 col-xs-6 task-closed">
                                     <a href="#">
-                                        <span className="glyphicon glyphicon-ok-circle"></span> 4220 Closed
+                                        <span className="glyphicon glyphicon-ok-circle"></span>
+                                        {this.state.issuesClosed} Closed
                                     </a>
                                 </div>
                             </div>
@@ -225,12 +277,6 @@ class ListIssues extends Component {
 
                             <Paging currentCount="8"
                                     onPageChange={this.onPageChange}
-                                    countItems={[
-                                        {value: 10},
-                                        {value: 25},
-                                        {value: 50},
-                                        {value: 100}
-                                    ]}
                                     currPage={this.state.currentPage}
                                     pagesCount={this.state.pagesCount}
                                     navChainLength="8"
