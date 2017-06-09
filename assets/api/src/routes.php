@@ -26,7 +26,46 @@ $app->any('/confirm[/{params:.*}]', function($request, $response, $args){
     
 });
 
+$app->any('/header[/{params:.*}]', function($request, $response, $args){
+    
+   if(isset($_SESSION['access_token'])){
+        $query = explode('?', $request->getUri())[1];
+        $arg = (isset($query) ? $query : '');
+        $this->logger->info("params: {$arg}");
+        Request::$url = 'https://api.github.com';
+        Request::$operation = '/'.$args['params'].'?'.$query;
+        Request::$custom_headers = [
+            'Authorization: token '.$_SESSION['access_token'],
+            'Accept: application/vnd.github.v3+json',
+            'User-Agent: fullstack_dev'
+        ];
+        Request::$custom_options = [
+            CURLOPT_VERBOSE => 1,
+            CURLOPT_HEADER => 1
+        ];
+        Request::$type = $request->getMethod();
+        Request::send($request->getParsedBody());
 
+        if(Request::$response === false){
+            Request::$response = array(
+                'curl_error'=>Request::$error_string,
+                'info'=>Request::$info
+            );
+        }else{
+            Request::$response = explode(chr(13).chr(10), Request::$header);
+            $res = [];
+            foreach(Request::$response as $index=>$header){
+                Request::$response[$index] = explode(':', $header, 2);
+                $res[Request::$response[$index][0]] = Request::$response[$index][1];
+            }
+            Request::$response = $res;
+        }
+        return $response->withJson(Request::$response, Request::$info['http_code']);
+    }else{
+        return $response->withRedirect('/logout');
+    }
+    
+});
 
 
 
@@ -49,7 +88,7 @@ $app->any('/proxy[/{params:.*}]', function($request, $response, $args){
         if(Request::$response === false){
             Request::$response = array(
                 'curl_error'=>Request::$error_string,
-                'headers'=>Request::$info
+                'info'=>Request::$info
             );
         }else{
             Request::$response = json_decode(Request::$response, true);

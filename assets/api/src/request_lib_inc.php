@@ -12,8 +12,11 @@ class Request {
 	static public $cRes;
 	static public $error = array();
 	static public $custom_headers = array();
+	static public $custom_options = array();
 	static public $info = '';
 	static public $error_string;
+	static protected $header_size;
+	static public $header;
 	
 	
 	
@@ -28,6 +31,9 @@ class Request {
 		self::$response = curl_exec(self::$cRes);
 		self::$info = curl_getinfo(self::$cRes);
 		self::$error_string = curl_error(self::$cRes);
+		self::$header_size = curl_getinfo(self::$cRes, CURLINFO_HEADER_SIZE);
+		self::$header = substr(self::$response, 0, self::$header_size);
+
 	}
 	
 	static public function init(){
@@ -52,16 +58,21 @@ class Request {
 	     		 array_push($headers, $header);
 	     	}
 	     }
-	     curl_setopt_array(self::$cRes, array(
-	     	CURLOPT_URL => self::$url.self::$operation,
+	     $opts = array(
+			CURLOPT_URL => self::$url.self::$operation,
 	     	CURLOPT_RETURNTRANSFER => 1,
 	     	CURLOPT_SSL_VERIFYPEER => 0,
 	     	CURLOPT_SSL_VERIFYHOST => 0,
 	     	CURLINFO_HEADER_OUT=> 1,
 	     	CURLOPT_FAILONERROR => 1,
 	     	CURLOPT_HTTPHEADER => $headers
-	     
-	     ));
+		 );
+		 if(count(self::$custom_options) > 0){
+	     	foreach(self::$custom_options as $ind=>$option){
+	     		  $opts[$ind] = $option;
+	     	}
+	     }
+		 curl_setopt_array(self::$cRes, $opts);
 	     if (!empty(self::$request_fields))
 	     {
 	          curl_setopt(self::$cRes, CURLOPT_POSTFIELDS, self::$request_fields);
