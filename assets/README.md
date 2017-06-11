@@ -1,7 +1,11 @@
 this app settings up for fullstack_dev github App.
 
 Deployment instruction:
-1. clone from github:
+1. clone from github: https://github.com/alexandrdev68/fullstack_dev.git
+2. go to 'assets' folder: npm install
+3 npm run build (for development) or npm run build-prod (for production)
+4 go to 'api' folder: composer install
+5 php -S localhost:8080 -t public public/index.php
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
