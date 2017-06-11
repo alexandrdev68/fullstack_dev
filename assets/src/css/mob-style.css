@@ -5,21 +5,30 @@
 
 /* Portrait tablet to landscape and desktop */
 @media (min-width: 768px) and (max-width: 979px) {
-    body.main-page{
+    article.main-page{
         background-size: auto;
     }
 }
 
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
-    body.main-page{
+    article.main-page{
         background-size: auto;
+    }
+
+    article.entry-page .comment-task .body-comment{
+        width: 100%;
     }
 }
 
 /* Landscape phones and down */
 @media (max-width: 480px) {
-    body.main-page{
+    article.main-page{
         background-size: auto;
     }
+
+    article.entry-page .comment-task .body-comment{
+        width: 100%;
+    }
+
 }

@@ -98,11 +98,9 @@ $app->any('/proxy[/{params:.*}]', function($request, $response, $args){
         return $response->withRedirect('/logout');
     }
 
-    
-    
-
-
 });
+
+
 $app->get('/[{name}]', function ($request, $response, $args) {
     // Sample log message
     $this->logger->info("Slim-Skeleton '/' route");
@@ -114,6 +112,15 @@ $app->get('/[{name}]', function ($request, $response, $args) {
         return $response->withRedirect('/');
     }
 
+    // Render index view
+    return $this->renderer->render($response, 'index.phtml', $args);
+});
+
+
+$app->get('/entry/{id}', function ($request, $response, $args) {
+    // Sample log message
+    $this->logger->info("Slim-Skeleton '/' route");
+    
     // Render index view
     return $this->renderer->render($response, 'index.phtml', $args);
 });

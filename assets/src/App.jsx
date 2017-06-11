@@ -9,6 +9,7 @@ import MainPage from './pages/index';
 import ListPage from './pages/list';
 import cookie from 'js-cookie';
 import NotFound from './pages/NotFound';
+import EntryPage from './pages/Entry';
 import 'jquery';
 
 class App extends Component {
@@ -20,6 +21,7 @@ class App extends Component {
         return (
             <Router>
                 <Switch>
+                    <Route path="/entry/:id" component={!!logged ? EntryPage : MainPage} />
                     <Route path="/:issue_page" component={!!logged ? ListPage : MainPage}/>
                     <Route path="/" exact component={!!logged ? ListPage : MainPage}/>
                     <Route component={NotFound}/>

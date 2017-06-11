@@ -1,10 +1,19 @@
 @background_btn: #9ed432;
 @background_btn_hover: #86b300;
-@color_btn: #FFFFFF;
+
 
 @font_bold: "Roboto_Bold";
 @font_regular: "Roboto_Regular";
 @font_light: "Roboto_light";
+
+@black: #000000;
+@white: #FFFFFF;
+@link_color: #99cc33;
+
+@border_radius: 8px;
+@height_content: ~"100vh - 95px";
+
+
 
 @font-face {
   font-family: @font_light;
@@ -60,13 +69,13 @@ article.main-page{
     .btn-login{
       font-family: @font_bold;
       background-color: @background_btn;
-      color: @color_btn;
+      color: @white;
       font-size: 16px;
       padding: 20px 115px;
     }
     .btn-login:hover{
       background-color: @background_btn_hover;
-      color: @color_btn;
+      color: @white;
     }
 
 }
@@ -93,14 +102,12 @@ header{
       }
     }
     .logout:hover{
-      color: #99cc33;
+      color: @link_color;
       text-decoration: none;
     }
 }
 
 article.list-page{
-
-
 
     .main-content{
       background-color: #f5f5f5;
@@ -108,14 +115,14 @@ article.list-page{
 
     .right-block-task{
 
-      height: calc(~"100vh - 95px");
+      min-height: calc(@height_content);
       background-image:  url("../img/task_fon.jpg");
       background-position: top center;
       background-repeat: no-repeat;
       background-size: cover;
 
       .text{
-        color: #ffffff;
+        color: @white;
         text-align: center;
         padding-top: calc(~"50vh - 110px");
 
@@ -136,11 +143,11 @@ article.list-page{
 
     }
     .left-block-task{
-      height: calc(~"100vh - 95px");
+      min-height: calc(@height_content);
 
       .task-open > a, .task-closed > a{
         text-decoration: none;
-        color: #000000;
+        color: @black;
       }
       .task-open > a:hover, .task-closed > a:hover{
         color: #7f7f7f;
@@ -179,27 +186,27 @@ article.list-page{
       }
       .pagination > li > a.prev, .pagination > li > a.next{
         background-color: transparent;
-        color: #99cc33;
+        color: @link_color;
       }
       .pagination > li > a.prev:hover, .pagination > li > a.next:hover{
         text-decoration: underline;
         background-color: transparent;
-        color: #99cc33;
+        color: @link_color;
       }
       .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
-        background-color: #99cc33;
-        color: #FFFFFF;
+        background-color: @link_color;
+        color: @white;
       }
       .pagination > li > a:focus, .pagination > li > a:hover, .pagination > li > span:focus, .pagination > li > span:hover {
-        background-color: #99cc33;
-        color: #FFFFFF;
+        background-color: @link_color;
+        color: @white;
       }
 
       .tasks{
         div{
-          background-color: #FFFFFF;
+          background-color: @white;
           margin: 20px 30px;
-          border-radius: 8px;
+          border-radius: @border_radius;
           padding: 20px 80px;
           box-shadow:  0 2px 5px rgba(0, 0, 0, 0.1);
 
@@ -209,7 +216,7 @@ article.list-page{
             top: 50px;
             font-size: 20px;
             line-height: 20px;
-            color: #99cc33;
+            color: @link_color;
           }
           span.comment{
             background-image: url("../img/comment.png");
@@ -234,7 +241,7 @@ article.list-page{
             line-height: 22px;
             margin: 10px 0;
             .title{
-              color: #000000;
+              color: @black;
 
             }
           }
@@ -253,18 +260,18 @@ article.list-page{
 
           .info.orange{
             background-color: #f9c600;
-            color: #000000;
+            color: @black;
             border-bottom: 1px solid #c6a300;
           }
           .info.red{
             background-color: #e10b00;
-            color: #FFFFFF;
+            color: @white;
             border-bottom: 1px solid #b40901;
           }
           .info.black{
             background-color: #444444;
-            color: #FFFFFF;
-            border-bottom: 1px solid #000000;
+            color: @white;
+            border-bottom: 1px solid @black;
           }
 
           p{
@@ -283,4 +290,122 @@ article.list-page{
 
 }
 
+.breadcrumb{
+  margin: 10px 0;
+
+    a{
+      color: @link_color;
+
+      .glyphicon{
+        margin-right: 10px;
+      }
+    }
+}
+
+article.entry-page{
+
+  .main-content{
+    background-color: #f5f5f5;
+    min-height: calc(@height_content);
+  }
+
+  .name-task{
+    background-color: @white;
+    border-radius: @border_radius;
+    padding: 20px 50px;
+    margin-bottom: 30px;
+    box-shadow:  0 2px 5px rgba(0, 0, 0, 0.1);
+
+
+    h1{
+      font-family: @font_light;
+      color: #363636;
+
+      span{
+        color: #c0c0c0 ;
+      }
+    }
+    p{
+      color: #a9a9a9;
+
+      span{
+        color: @white;
+        background-color: @link_color;
+        cursor: none;
+      }
+      a{
+        color: @link_color;
+        margin-left: 10px;
+      }
+    }
+
+  }
+  .comment-task{
+
+    padding: 20px 0 0;
+
+    .img-user{
+      width: 100px;
+      float: left;
+      margin-right: 20px;
+      border-radius: 50px;
+      background-color: @white;
+      img{
+        border-radius: 50px;
+        width: 100px;
+        max-width: 100px;
+      }
+    }
+
+    /* arrow box */
+    .arrow_box {
+      position: relative;
+      background: @white;
+    }
+    .arrow_box:after {
+      right: 100%;
+      top: 50%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-color: rgba(255, 255, 255, 0);
+      border-right-color: @white;
+      border-width: 15px;
+      margin-top: -15px;
+    }
+
+    /* END arrow box */
+
+    .body-comment{
+      width: calc(~"100% - 120px");
+      background-color: @white;
+      float: left;
+      border-radius: @border_radius;
+      box-shadow:  0 2px 5px rgba(0, 0, 0, 0.1);
+      padding-top: 10px;
+    }
+
+    .data-comment{
+      border-bottom: 1px solid #e6e6e6;
+      padding: 20px 30px 30px;
+      color: #a9a9a9;
+      a{
+        color: @link_color;
+      }
+
+    }
+    .text-comment{
+      padding: 20px 30px;
+      color: #999999;
+    }
+
+  }
+  .comment-task:last-child{
+    padding: 20px 0;
+  }
+
+}
 

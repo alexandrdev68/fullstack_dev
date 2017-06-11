@@ -6,6 +6,8 @@ require('malihu-custom-scrollbar-plugin')($);
 import moment from 'moment';
 import RightSide from "./subcomponents/RightSide";
 import JSExt from '../modules/js_extend';
+import {Link} from 'react-router-dom';
+
 
 class ListIssues extends Component {
 
@@ -61,6 +63,22 @@ class ListIssues extends Component {
 
 
     componentWillMount() {
+
+
+    }
+
+
+    getIssues() {
+
+        browser_request({
+            method: 'GET',
+            url: `/proxy/user/issues?filter=all&state=all&page=${this.state.currentPage}&per_page=${this.state.perPage}`
+        }, this.issuesResponse.bind(this));
+
+    }
+
+
+    componentDidMount() {
 
         let self = this;
 
@@ -127,30 +145,16 @@ class ListIssues extends Component {
 
     }
 
-
-    getIssues() {
-
-        browser_request({
-            method: 'GET',
-            url: `/proxy/user/issues?filter=all&state=all&page=${this.state.currentPage}&per_page=${this.state.perPage}`
-        }, this.issuesResponse.bind(this));
-
-    }
-
-
-    componentDidMount() {
-
-
-    }
-
     onPageChange(event) {
         let target = event.target;
         let page_num = target.dataset.page_num;
+        if(page_num == -1){
+            return false;
+        }
         this.setState({
             currentPage: page_num
         }, () => {
             this.getIssues();
-            event.click();
         });
 
     }
@@ -217,11 +221,12 @@ class ListIssues extends Component {
                                 <span className="glyphicon glyphicon-ok-circle"></span>}
 
                             <span className="glyphicon comment">&#8194;
-                                <a href={issues[index].html_url}>{issues[index].comments}</a>
+                                <Link to={`/entry/${issues[index].number}`}>{issues[index].comments}</Link>
                             </span>
 
                             <h3>
-                                <a href={issues[index].html_url} className="title">{issues[index].title}</a>
+                                <Link to={`/entry/${issues[index].number}?url=${issues[index].url.split('https://api.github.com/').join('')}`}
+                                      className="title">{issues[index].title}</Link>
                                 {getLabelsHTML(issues[index].labels)}
                             </h3>
                             {getInfoAboutIssue(issues[index])}

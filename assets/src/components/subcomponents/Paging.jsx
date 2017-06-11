@@ -40,10 +40,10 @@ class Paging extends Component {
         navArr = this.build_page(this.props.currPage, this.props.pagesCount, this.props.navChainLength);
 
         navHTML.push(
-            <li key="prev" style={navArr[0] == 'pred' ? {visibility: 'visible'} : {visibility: 'hidden'}}>
+            <li key="prev">
                 <Link
-                      data-page_num={navArr['current'] - 1}
-                      to={`/${navArr['current'] - 1}`}
+                      data-page_num={navArr[0] == 'pred' ? navArr['current'] - 1 : '-1'}
+                      to={`/${navArr[0] == 'pred' ? navArr['current'] - 1 : navArr['current']}`}
                       >Previous
                 </Link>
             </li>
@@ -69,11 +69,10 @@ class Paging extends Component {
             }
         }
         navHTML.push(
-            <li key='next' style={navArr['current'] >= this.props.pagesCount ?
-                {visibility: 'hidden'} : {visibility: 'visible'}}>
+            <li key='next'>
                 <Link
-                      data-page_num={navArr['current'] + 1}
-                      to={`/${navArr['current'] + 1}`}
+                      data-page_num={navArr['current'] >= this.props.pagesCount ? '-1' : navArr['current'] + 1}
+                      to={`/${navArr['current'] >= this.props.pagesCount ? navArr['current'] : navArr['current'] + 1}`}
                       >
                     Next
                 </Link>
